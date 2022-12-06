@@ -1,7 +1,8 @@
 import Head from "next/head"
 import Image from "next/image"
 import styles from "../styles/Home.module.css"
-import ManualHeader from "../components/ManualHeader"
+import Header from "../components/Header"
+import LotteryEntrance from "../components/LotteryEntrance"
 
 export default function Home() {
     return (
@@ -11,7 +12,9 @@ export default function Home() {
                 <meta name="description" content="A Lottery running on Web3!" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <ManualHeader />
+            <h1>Decentralized lottery</h1>
+            <Header />
+            <LotteryEntrance />
 
             {/* Header with a connecting button for the wallet */}
         </div>
