@@ -1,5 +1,4 @@
 import { contractAddresses, abi } from "../constants"
-// dont export from moralis when using react
 import { useMoralis, useWeb3Contract } from "react-moralis"
 import { useEffect, useState } from "react"
 import { useNotification } from "web3uikit"
@@ -7,16 +6,14 @@ import { ethers } from "ethers"
 
 export default function LotteryEntrance() {
     const { Moralis, isWeb3Enabled, chainId: chainIdHex } = useMoralis()
-    // These get re-rendered every time due to our connect button!
     const chainId = parseInt(chainIdHex)
-    // console.log(`ChainId is ${chainId}`)
     const lotteryAddress = chainId in contractAddresses ? contractAddresses[chainId][0] : null
 
-    // State hooks
-    // https://stackoverflow.com/questions/58252454/react-hooks-using-usestate-vs-just-variables
     const [entranceFee, setEntranceFee] = useState("0")
     const [numberOfPlayers, setNumberOfPlayers] = useState("0")
     const [recentWinner, setRecentWinner] = useState("0")
+
+    const dispatch = useNotification()
 
     const {
         runContractFunction: enterLottery,
@@ -35,7 +32,7 @@ export default function LotteryEntrance() {
 
     const { runContractFunction: getEntranceFee } = useWeb3Contract({
         abi: abi,
-        contractAddress: lotteryAddress, // specify the networkId
+        contractAddress: lotteryAddress,
         functionName: "getEntranceFee",
         params: {},
     })
@@ -55,12 +52,6 @@ export default function LotteryEntrance() {
     })
 
     async function updateUIValues() {
-        // Another way we could make a contract call:
-        // const options = { abi, contractAddress: lotteryAddress }
-        // const fee = await Moralis.executeFunction({
-        //     functionName: "getEntranceFee",
-        //     ...options,
-        // })
         const entranceFeeFromCall = (await getEntranceFee()).toString()
         const numPlayersFromCall = (await getPlayersNumber()).toString()
         const recentWinnerFromCall = await getRecentWinner()

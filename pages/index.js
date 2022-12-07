@@ -12,7 +12,6 @@ export default function Home() {
                 <meta name="description" content="A Lottery running on Web3!" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <h1>Decentralized lottery</h1>
             <Header />
             <LotteryEntrance />
 
